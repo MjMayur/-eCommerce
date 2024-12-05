@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -9,7 +9,12 @@ import {
   CardTitle,
   CardText,
   Button,
+  Spinner,
+  CardHeader,
 } from "reactstrap";
+import { Swiper, SwiperSlide } from "swiper/react"; // Use Swiper components
+import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Add additional modules as needed
+import "swiper/css";
 
 const Home = () => {
   const featuredProducts = [
@@ -34,64 +39,124 @@ const Home = () => {
       price: "$199",
       image: "https://via.placeholder.com/150",
     },
+    {
+      id: 4,
+      title: "Smartwatch",
+      description: "Track your fitness and stay connected.",
+      price: "$199",
+      image: "https://via.placeholder.com/150",
+    },
   ];
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <Spinner color="primary h-100 flex align-center justify-center">
+        Loading...
+      </Spinner>
+    );
+  }
 
   return (
     <div>
       {/* Hero Section */}
-      <div className="bg-gray-100 py-16 text-center">
-        <h1 className="text-4xl font-bold text-primary mb-4">
-          Welcome to E-Shop
-        </h1>
-        <p className="text-lg text-gray-600">
-          Discover the best products at unbeatable prices.
-        </p>
-        <Button color="primary" className="mt-4">
-          Shop Now
-        </Button>
+      <div className="relative w-full h-screen  absolute top-0">
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          loop={true}
+          className="w-full h-1/2  "
+        >
+          <SwiperSlide>
+            <img
+              src="https://via.placeholder.com/800x400?text=Product+1"
+              alt="Product 1"
+              className="w-full h-full object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src="https://via.placeholder.com/800x400?text=Product+2"
+              alt="Product 2"
+              className="w-full h-full object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src="https://via.placeholder.com/800x400?text=Product+3"
+              alt="Product 3"
+              className="w-full h-full object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src="https://via.placeholder.com/800x400?text=Product+4"
+              alt="Product 4"
+              className="w-full h-full object-cover"
+            />
+          </SwiperSlide>
+        </Swiper>
+
+        {/* Featured Products */}
+        <div className=" w-100 mt-3">
+          <Card>
+            <CardHeader>Products</CardHeader>
+            <Row md={12}>
+              {products.map((product) => (
+                <Col md="3" className="mb-4 " key={product.id}>
+                  <Card className="shadow-md hover:shadow-lg transition-shadow h-100 ">
+                    <CardImg
+                      top
+                      src={product.image}
+                      alt={product.title}
+                      className="h-80 p-3"
+                    />
+                    <CardBody>
+                      <CardTitle
+                        tag="h5"
+                        className="font-semibold text-gray-700"
+                      >
+                        {product.title}
+                      </CardTitle>
+
+                      <div className="flex justify-between items-center mt-3">
+                        <span className="font-bold text-primary">
+                          {product.price}
+                        </span>
+                        <Button color="primary" size="sm">
+                          Add to Cart
+                        </Button>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Card>
+        </div>
       </div>
 
-      {/* Featured Products */}
-      <Container className="py-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-          Featured Products
-        </h2>
-        <Row>
-          {featuredProducts.map((product) => (
-            <Col md="4" className="mb-4" key={product.id}>
-              <Card className="shadow-md hover:shadow-lg transition-shadow">
-                <CardImg
-                  top
-                  src={product.image}
-                  alt={product.title}
-                  className="h-48 object-cover"
-                />
-                <CardBody>
-                  <CardTitle tag="h5" className="font-semibold text-gray-700">
-                    {product.title}
-                  </CardTitle>
-                  <CardText className="text-gray-500">
-                    {product.description}
-                  </CardText>
-                  <div className="flex justify-between items-center mt-3">
-                    <span className="font-bold text-primary">
-                      {product.price}
-                    </span>
-                    <Button color="primary" size="sm">
-                      Add to Cart
-                    </Button>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-4 text-center">
+      {/* <footer className="bg-gray-800 text-white py-4 text-center">
         <p>&copy; 2024 E-Shop. All rights reserved.</p>
-      </footer>
+      </footer> */}
     </div>
   );
 };
