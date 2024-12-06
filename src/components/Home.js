@@ -82,7 +82,7 @@ const Home = () => {
           pagination={{ clickable: true }}
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           loop={true}
-          className="w-full h-1/2  "
+          className="w-full h-1/2 "
         >
           <SwiperSlide>
             <img
@@ -115,41 +115,40 @@ const Home = () => {
         </Swiper>
 
         {/* Featured Products */}
-        <div className=" w-100 mt-3">
-          <Card>
-            <CardHeader>Products</CardHeader>
-            <Row md={12}>
-              {products.map((product) => (
-                <Col md="3" className="mb-4 " key={product.id}>
-                  <Card className="shadow-md hover:shadow-lg transition-shadow h-100 ">
-                    <CardImg
-                      top
-                      src={product.image}
-                      alt={product.title}
-                      className="h-80 p-3"
-                    />
-                    <CardBody>
-                      <CardTitle
-                        tag="h5"
-                        className="font-semibold text-gray-700"
-                      >
-                        {product.title}
-                      </CardTitle>
+        <div className=" w-100 mt-3 p-3">
+          <Row md={12}>
+            {products.map((product) => (
+              <Col md="2" className="mb-4 " key={product.id}>
+                <Card className="shadow-md hover:shadow-lg transition-shadow h-100 p-3 ">
+                  <CardImg
+                    top
+                    src={product.image}
+                    alt={product.title}
+                    className="h-80 p-5"
+                  />
+                  <CardBody>
+                    <CardTitle tag="h5" className="font-semibold text-gray-700">
+                      {product.title.length > 20
+                        ? `${product.title.slice(0, 20)}...`
+                        : product.title}
+                    </CardTitle>
 
-                      <div className="flex justify-between items-center mt-3">
-                        <span className="font-bold text-primary">
-                          {product.price}
-                        </span>
-                        <Button color="primary" size="sm">
-                          Add to Cart
-                        </Button>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-          </Card>
+                    <div className="flex justify-between items-center mt-5">
+                      <span className=" font-bold text-primary absolute bottom-3 left-3 ">
+                        {product.price}
+                      </span>
+                      <Button
+                        color="primary"
+                        size="sm absolute bottom-3 right-3"
+                      >
+                        Add to Cart
+                      </Button>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </div>
       </div>
 

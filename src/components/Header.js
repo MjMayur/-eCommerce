@@ -11,60 +11,42 @@ import {
 
 function Header() {
   return (
-    <Navbar color="light" light expand="md" className="shadow-md px-4">
-      {/* Logo */}
-      <NavbarBrand href="/" className="text-primary font-bold text-xl">
-        E-Shop
-      </NavbarBrand>
+    <div className="shadow-md px-4 justify-center flex">
+      <Navbar light expand="md" className=" w-75">
+        <NavbarBrand href="/" className="text-primary font-bold text-4xl">
+          E-Shop
+        </NavbarBrand>
 
-      {/* Search Bar */}
-      <div className="flex-grow mx-4 hidden md:flex items-center">
-        <Input
-          type="text"
-          placeholder="Search for products..."
-          className="rounded-l-md border-gray-300 focus:ring-primary focus:border-primary w-25"
-        />
-        <Button color="primary" className="rounded-r-md">
-          Search
-        </Button>
-      </div>
+        {/* Search Bar */}
+        <div className="relative w-50 h-12">
+          <Input
+            type="text"
+            placeholder="Search for products..."
+            className="rounded-l-md border-gray-300 focus:ring-primary focus:border-primary w-full h-full"
+          />
+          {/* <i className="absolute left-3 top-center top-3 text-gray-400 fas fa-search"></i> */}
+        </div>
 
-      {/* Navigation Links */}
-      <Nav className="ml-auto flex items-center gap-4" navbar>
-        <NavItem>
-          <NavLink href="/home" className="text-gray-700 hover:text-primary">
-            Home
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            href="/products"
-            className="text-gray-700 hover:text-primary"
-          >
-            Products
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/about" className="text-gray-700 hover:text-primary">
-            About
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/contact" className="text-gray-700 hover:text-primary">
-            Contact
-          </NavLink>
-        </NavItem>
-      </Nav>
+        {/* Navigation Links */}
+        <Nav className=" flex items-center gap-4 text-primary" navbar>
+          <NavItem>
+            <NavLink href="/home" className=" text-xl hover:text-primary">
+              <i class="fa fa-user-circle mr-2 " aria-hidden="true"></i>
+              Login
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/home" className=" text-xl hover:text-primary">
+              <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>
+              Cart
+            </NavLink>
+          </NavItem>
+        </Nav>
 
-      {/* Cart Icon */}
-      <div className="ml-4 flex items-center">
-        <img
-          src="https://img.icons8.com/ios-glyphs/30/shopping-cart--v1.png"
-          alt="Cart"
-          className="cursor-pointer hover:opacity-80"
-        />
-      </div>
-    </Navbar>
+        {/* Cart Icon */}
+        <div className="ml-4 flex items-center"></div>
+      </Navbar>
+    </div>
   );
 }
 
