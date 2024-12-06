@@ -30,13 +30,19 @@ function Header() {
         {/* Navigation Links */}
         <Nav className=" flex items-center gap-4 text-primary" navbar>
           <NavItem>
-            <NavLink href="/home" className=" text-xl hover:text-primary">
+            <NavLink
+              href="/home"
+              className="text-black text-xl hover:text-primary"
+            >
               <i class="fa fa-user-circle mr-2 " aria-hidden="true"></i>
               Login
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/home" className=" text-xl hover:text-primary">
+            <NavLink
+              href="/home"
+              className=" text-black  text-xl hover:text-primary"
+            >
               <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>
               Cart
             </NavLink>
