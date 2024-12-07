@@ -15,7 +15,8 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react"; // Use Swiper components
 import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Add additional modules as needed
 import "swiper/css";
-import BoxCards from "./BoxCards";
+
+import ProductCards from "./BoxCards";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -113,19 +114,54 @@ const Home = () => {
         </Swiper>
 
         {/* Featured Products */}
+        <Row>
+          <Card className="mt-3  w-75">
+            <p className="bg-white text-2xl font-bold mb-3 pt-4">Electronics</p>
+            <Row md={12}>
+              {categories.map((product) => (
+                <Col md="2" key={product.id}>
+                  <Card className="shadow-md hover:shadow-lg  h-60 p-3 mt-4">
+                    <CardImg
+                      top
+                      src={product.image}
+                      alt={product.title}
+                      className="h-100 p-4 "
+                    />
 
-        <Row md={12} className="p-3 ">
-          {categories.map((product) => (
-            <Col md="2" key={product.id}>
-              <Card className="shadow-md hover:shadow-lg  h-60 p-3 ">
-                <CardImg
-                  top
-                  src={product.image}
-                  alt={product.title}
-                  className="h-100 p-4"
-                />
+                    <CardTitle
+                      tag="h5"
+                      className="font-semibold text-gray-700 cursor-pointer text-center"
+                    >
+                      {product.title?.length > 20
+                        ? `${product.title.slice(0, 20)}...`
+                        : product.name}
+                    </CardTitle>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Card>{" "}
+          <CardImg
+            top
+            src="https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg"
+            alt="shoes"
+            className="h-100 w-25 mt-3"
+          />
+        </Row>
+        <Card className="mt-3 p-3">
+          <p className="bg-white text-2xl font-bold mb-2 ">Fasion</p>
+          <Row md={12}>
+            {categories.map((product) => (
+              <Col md="2" key={product.id}>
+                <Card className="shadow-md hover:shadow-lg  h-60 p-3 ">
+                  <CardImg
+                    top
+                    src={product.image}
+                    alt={product.title}
+                    className="h-100 p-4"
+                  />
 
-                {/* <CardTitle
+                  {/* <CardTitle
                   tag="h5"
                   className="font-semibold text-gray-700 cursor-pointer absolute bottom-3"
                 >
@@ -133,27 +169,58 @@ const Home = () => {
                     ? `${product.title.slice(0, 20)}...`
                     : product.name}
                 </CardTitle> */}
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Card>
+        <div className="bg-[#f1f2f4]">
+          <Row className="  pt-3 bg-[#f1f2f4]">
+            <Col md={4}>
+              <Card className="shadow-sm p-3  ">
+                <ProductCards />
               </Card>
             </Col>
-          ))}
-        </Row>
-        <Row className="p-3 ">
-          <Col md={4}>
-            <Card className="shadow-sm p-3  ">
-              <BoxCards />
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card className="shadow-sm p-3  ">
-              <BoxCards />
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card className="shadow-sm p-3  ">
-              <BoxCards />
-            </Card>
-          </Col>
-        </Row>
+            <Col md={4}>
+              <Card className="shadow-sm p-3  ">
+                <ProductCards />
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="shadow-sm p-3  ">
+                <ProductCards />
+              </Card>
+            </Col>
+          </Row>
+        </div>
+        <div className="bg-[#f1f2f4] ">
+          <Card className="mt-3 p-3 ">
+            <p className="bg-white text-2xl font-bold mb-2 ">Electronics</p>
+            <Row md={12}>
+              {categories.map((product) => (
+                <Col md="2" key={product.id}>
+                  <Card className="shadow-md hover:shadow-lg  h-60 p-3 ">
+                    <CardImg
+                      top
+                      src={product.image}
+                      alt={product.title}
+                      className="h-100 p-4"
+                    />
+
+                    {/* <CardTitle
+                  tag="h5"
+                  className="font-semibold text-gray-700 cursor-pointer absolute bottom-3"
+                >
+                  {product.title?.length > 20
+                    ? `${product.title.slice(0, 20)}...`
+                    : product.name}
+                </CardTitle> */}
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Card>
+        </div>
       </div>
     </div>
   );
