@@ -31,9 +31,11 @@ function Products() {
 
   if (loading) {
     return (
-      <Spinner color="primary h-100 flex align-center justify-center">
-        Loading...
-      </Spinner>
+      <div className="bg-white w-full h-screen flex justify-center items-center ">
+        <Spinner color="primary h-1 flex align-center justify-center">
+          Loading...
+        </Spinner>
+      </div>
     );
   }
 
@@ -41,7 +43,7 @@ function Products() {
     <Row md={12} className="m-3">
       {products.map((product) => (
         <Col md={3} className="mt-5">
-          <Card className="shadow-md hover:shadow-lg transition-shadow h-100 ">
+          <Card className=" hover:scale-105 hover:shadow-lg transition-all duration-200 h-100 ">
             <CardHeader>Products</CardHeader>
             <CardImg
               top
