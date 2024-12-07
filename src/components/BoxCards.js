@@ -36,7 +36,7 @@ function ProductCards() {
       {/* Adjusted gap for reduced vertical space */}
       {products.map((product) => (
         <Col md="12" key={product.id} className="p-2">
-          <Card className=" hover:shadow-lg transition-shadow p-2">
+          <Card className="hover:shadow-lg transition-shadow duration-200 p-2">
             <CardImg
               top
               src={product.image}
