@@ -43,18 +43,6 @@ function Products() {
     <Row md={12} className="m-3">
       {products.map((product, index) => (
         <Col md={3} className="mt-5">
-          {/* initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition=
-          {{ duration: 0.3, delay: 0.5 * index }} */}
-          {/* initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition=
-          {{
-            duration: 0.3,
-            delay: 0.1 * index,
-            ease: "easeInOut",
-          }} */}
           <motion.div
             key={index}
             initial={{ x: -100, opacity: 0 }}
