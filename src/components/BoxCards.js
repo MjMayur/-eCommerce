@@ -1,45 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, CardBody, CardImg, CardTitle, Col } from "reactstrap";
 
-function ProductCards() {
-  const products = [
-    {
-      id: 1,
-      name: "Product 1",
-      image:
-        "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAuAMBIgACEQEDEQH/xAAcAAEAAQUBAQAAAAAAAAAAAAAAAQIDBAUGBwj/xAA5EAABAwIEBAQFAQUJAAAAAAABAAIDBBEFBhIhEzFBYSJRcYEHFDKRoUIjM1Ji8BUWNIKSscHR8f/EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/EABkRAQEBAQEBAAAAAAAAAAAAAAABEQIhEv/aAAwDAQACEQMRAD8A9m...",
-      price: "25.00",
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      image: "https://via.placeholder.com/100",
-      price: "15.00",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      image: "https://via.placeholder.com/100",
-      price: "30.00",
-    },
-    {
-      id: 4,
-      name: "Product 4",
-      image: "https://via.placeholder.com/100",
-      price: "20.00",
-    },
-  ];
+function ProductCards(category) {
+  const [sports, setSports] = useState([]);
+  console.log(category);
+  useEffect(() => {
+    fetch(`https://dummyjson.com/products/category/${category.category}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSports(data.products);
+        console.log(data.products);
+        // setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+        // setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="grid grid-cols-2 ">
       {" "}
       {/* Adjusted gap for reduced vertical space */}
-      {products.map((product) => (
+      {sports.slice(0, 4).map((product) => (
         <Col md="12" key={product.id} className="p-2">
           <Card className=" hover:shadow-lg transition-shadow p-2">
             <CardImg
               top
-              src={product.image}
+              src={product.thumbnail}
               alt={product.name}
               className=" h-60"
             />
@@ -48,9 +36,9 @@ function ProductCards() {
                 tag="h5"
                 className="font-semibold text-gray-700 text-center"
               >
-                {product.name.length > 30
-                  ? `${product.name.slice(0, 20)}...`
-                  : product.name}
+                {product.title.length > 10
+                  ? `${product.title.slice(0, 20)}...`
+                  : product.title}
               </CardTitle>
               <div className="flex justify-between items-center pt-8">
                 <span className="font-bold text-primary absolute bottom-3 left-3">
