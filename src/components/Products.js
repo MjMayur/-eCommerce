@@ -31,7 +31,7 @@ function Products() {
 
   if (loading) {
     return (
-      <Spinner color="primary h-100 flex align-center justify-center">
+      <Spinner color="primary flex align-center justify-center">
         Loading...
       </Spinner>
     );

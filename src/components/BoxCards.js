@@ -10,11 +10,11 @@ function ProductCards() {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-4 p-2  ">
+    <div className="grid grid-cols-2 gap-4 p-2">
       {products.map((product) => (
         <Card
           key={product.id}
-          className="bg-white  rounded-lg p-4 flex flex-col items-center"
+          className="bg-white hover:shadow-lg transition-shadow duration-200 rounded-lg p-4 flex flex-col items-center"
         >
           <img
             src={product.image}
