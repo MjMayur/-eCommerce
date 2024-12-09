@@ -25,7 +25,16 @@ function ProductCards(category) {
       {/* Adjusted gap for reduced vertical space */}
       {sports.slice(0, 4).map((product) => (
         <Col md="12" key={product.id} className="p-2">
-          <Card className=" hover:shadow-lg transition-shadow p-2">
+          <Card
+            className=" hover:shadow-lg transition-shadow p-2 hover:text-[#0d6efd] cursor-pointer"
+            onClick={() => {
+              navigate("/product/details", {
+                state: {
+                  productID: product.id,
+                },
+              });
+            }}
+          >
             <CardImg
               top
               src={product.thumbnail}
@@ -33,17 +42,7 @@ function ProductCards(category) {
               className=" h-60"
             />
             <CardBody className="">
-              <CardTitle
-                tag="h5"
-                className="font-semibold text-gray-700 text-center hover:text-[#0d6efd]"
-                onClick={() => {
-                  navigate("/product/details", {
-                    state: {
-                      productID: product.id,
-                    },
-                  });
-                }}
-              >
+              <CardTitle tag="h5" className="font-semibold  text-center ">
                 {product.title.length > 10
                   ? `${product.title.slice(0, 20)}...`
                   : product.title}

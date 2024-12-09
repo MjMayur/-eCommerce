@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -14,6 +15,7 @@ import {
 
 function Products() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [cartProducts, setCartProducts] = useState([]);
 
@@ -57,15 +59,23 @@ function Products() {
       <p className="text-center text-3xl text-bold">Products</p>
       {products.map((product) => (
         <Col md={2} className="mt-5">
-          <Card className="shadow-md hover:shadow-lg transition-shadow h-100 ">
+          <Card className=" hover:shadow-2xl transition-shadow h-100 cursor-pointer hover:text-[#0d6efd] text-center border-none">
             <CardImg
               top
               src={product.images[0]}
               alt={product.title}
               className="h-80 p-5 hover:scale-110 transition-transform duration-300"
             />
-            <CardBody>
-              <CardTitle tag="h5" className="font-semibold text-gray-700">
+            <CardBody
+              onClick={() => {
+                navigate("/product/details", {
+                  state: {
+                    productID: product.id,
+                  },
+                });
+              }}
+            >
+              <CardTitle tag="h5" className="font-semibold ">
                 {product.title?.length > 20
                   ? `${product.title.slice(0, 20)}...`
                   : product.title}

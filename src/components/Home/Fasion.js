@@ -21,7 +21,16 @@ function Fashion() {
     <Row md={12}>
       {fashionProducts.slice(0, 6).map((product) => (
         <Col md="2" key={product.id}>
-          <Card className="shadow-md hover:shadow-lg  h-70 p-3 mt-4">
+          <Card
+            className="shadow-md hover:shadow-lg  h-70 p-3 mt-4 hover:text-[#0d6efd] cursor-pointer"
+            onClick={() => {
+              navigate("/product/details", {
+                state: {
+                  productID: product.id,
+                },
+              });
+            }}
+          >
             <CardImg
               top
               src={product.thumbnail}
@@ -30,14 +39,7 @@ function Fashion() {
             />
             <CardTitle
               tag="h5"
-              className="font-semibold text-gray-700 cursor-pointer text-center hover:text-[#0d6efd]"
-              onClick={() => {
-                navigate("/product/details", {
-                  state: {
-                    productID: product.id,
-                  },
-                });
-              }}
+              className="font-semibold  cursor-pointer text-center "
             >
               {product.title?.length > 20
                 ? `${product.title.slice(0, 20)}...`
