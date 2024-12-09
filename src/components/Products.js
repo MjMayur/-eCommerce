@@ -32,9 +32,9 @@ function Products() {
 
   if (loading) {
     return (
-      <Spinner color="primary h-100 flex align-center justify-center">
-        Loading...
-      </Spinner>
+      <div className="bg-white w-full h-screen flex justify-center items-center ">
+        <Spinner color="primary">Loading...</Spinner>
+      </div>
     );
   }
 

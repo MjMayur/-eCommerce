@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Card, Col, Row, Button, Badge } from "reactstrap";
 
 function ProductDetails() {
+  const location = useLocation();
+  const productID = location.state.productID;
+
   const [product, setProduct] = useState({
     id: 1,
     title: "Essence Mascara Lash Princess",
@@ -59,12 +63,10 @@ function ProductDetails() {
     images: ["...", "...", "..."],
   });
   useEffect(() => {
-    fetch("https://dummyjson.com/products/1")
+    fetch(`https://dummyjson.com/products/${productID}`)
       .then((response) => response.json())
       .then((data) => {
         setProduct(data);
-        console.log(data.products);
-        // setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching product data:", error);

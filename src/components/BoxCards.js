@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Card, CardBody, CardImg, CardTitle, Col } from "reactstrap";
 
 function ProductCards(category) {
   const [sports, setSports] = useState([]);
-  console.log(category);
+  const navigate = useNavigate();
   useEffect(() => {
     fetch(`https://dummyjson.com/products/category/${category.category}`)
       .then((response) => response.json())
       .then((data) => {
         setSports(data.products);
-        console.log(data.products);
+
         // setLoading(false);
       })
       .catch((error) => {
@@ -34,12 +35,24 @@ function ProductCards(category) {
             <CardBody className="">
               <CardTitle
                 tag="h5"
-                className="font-semibold text-gray-700 text-center"
+                className="font-semibold text-gray-700 text-center hover:text-[#0d6efd]"
+                onClick={() => {
+                  navigate("/product/details", {
+                    state: {
+                      productID: product.id,
+                    },
+                  });
+                }}
               >
                 {product.title.length > 10
                   ? `${product.title.slice(0, 20)}...`
                   : product.title}
               </CardTitle>
+              <p className="text-sm text-center">
+                {product.description?.length > 45
+                  ? `${product.description.slice(0, 45)}...`
+                  : product.description}
+              </p>
               <div className="flex justify-between items-center pt-8">
                 <span className="font-bold text-primary absolute bottom-3 left-3">
                   {product.price ? `$${product.price}` : "N/A"}

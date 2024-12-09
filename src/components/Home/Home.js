@@ -85,11 +85,11 @@ const Home = () => {
 
         {/* Featured Products */}
         <Row className="p-2">
-          <Card
-            className="mt-3  w-75 cursor-pointer"
-            onClick={() => navigate("/products")}
-          >
-            <p className="bg-white text-2xl font-bold mb-3 pt-4 ">
+          <Card className="mt-3  w-75 cursor-pointer">
+            <p
+              className="bg-white text-2xl font-bold mb-3 pt-4 "
+              onClick={() => navigate("/products")}
+            >
               Electronics
             </p>
             <SmartPhones />

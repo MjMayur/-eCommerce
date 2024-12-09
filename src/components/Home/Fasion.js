@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardImg, CardTitle, Col, Row } from "reactstrap";
 function Fashion() {
   const [fashionProducts, setFasionProduct] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("https://dummyjson.com/products")
       .then((response) => response.json())
       .then((data) => {
         setFasionProduct(data.products);
-        console.log(data.products);
+
         // setLoading(false);
       })
       .catch((error) => {
@@ -28,12 +30,24 @@ function Fashion() {
             />
             <CardTitle
               tag="h5"
-              className="font-semibold text-gray-700 cursor-pointer text-center"
+              className="font-semibold text-gray-700 cursor-pointer text-center hover:text-[#0d6efd]"
+              onClick={() => {
+                navigate("/product/details", {
+                  state: {
+                    productID: product.id,
+                  },
+                });
+              }}
             >
               {product.title?.length > 20
                 ? `${product.title.slice(0, 20)}...`
                 : product.title}
             </CardTitle>
+            <p className="text-sm text-center">
+              {product.description?.length > 45
+                ? `${product.description.slice(0, 45)}...`
+                : product.description}
+            </p>
           </Card>
         </Col>
       ))}
