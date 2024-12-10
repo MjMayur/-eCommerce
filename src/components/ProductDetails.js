@@ -146,7 +146,6 @@ function ProductDetails() {
                 <div
                   style={{
                     position: "absolute",
-
                     width: "70vw", // Full viewport width
                     height: "70vh", // Full viewport height
                     zIndex: 1000, // Ensure it's above everything else
