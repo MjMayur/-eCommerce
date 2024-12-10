@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Card, Col, Row, Button, Badge } from "reactstrap";
+import { Card, Col, Row, Button, Badge, CardHeader } from "reactstrap";
 
 function ProductDetails() {
   const location = useLocation();
@@ -62,6 +62,24 @@ function ProductDetails() {
     thumbnail: "...",
     images: ["...", "...", "..."],
   });
+  const [zoomPosition, setZoomPosition] = useState({
+    x: 0,
+    y: 0,
+    isHovering: false,
+  });
+
+  const handleMouseMove = (e) => {
+    const { left, top, width, height } =
+      e.currentTarget.getBoundingClientRect();
+    const x = ((e.pageX - left) / width) * 100; // Calculate percentage position
+    const y = ((e.pageY - top) / height) * 100;
+
+    setZoomPosition({ x, y, isHovering: true });
+  };
+
+  const handleMouseLeave = () => {
+    setZoomPosition({ ...zoomPosition, isHovering: false });
+  };
   useEffect(() => {
     fetch(`https://dummyjson.com/products/${productID}`)
       .then((response) => response.json())
@@ -75,19 +93,87 @@ function ProductDetails() {
   }, []);
   return (
     <div className="d-flex justify-content-center my-5">
+      {/* <div>
+        <p className="text-center text-3xl text-bold">Product Details</p>
+      </div> */}
       <Card className="p-4 shadow-lg w-75">
         <Row>
           {/* Product Image Section */}
-          <Col md={5}>
-            <img
-              src={product?.thumbnail || "https://via.placeholder.com/300"}
-              alt={product?.title}
-              className="img-fluid rounded shadow-sm"
-            />
+          <Col
+            md={5}
+            style={{
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                position: "relative",
+                display: "flex",
+                gap: "20px",
+              }}
+            >
+              {/* Main Image */}
+              <div
+                style={{
+                  position: "relative",
+                  overflow: "hidden",
+                  width: "500px",
+                  height: "500px",
+                  border: "1px solid #ccc",
+                }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+              >
+                <img
+                  src={product?.thumbnail || "https://via.placeholder.com/300"}
+                  alt={product?.title}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            </div>
           </Col>
 
           {/* Product Info Section */}
           <Col md={7}>
+            {/* Zoomed Image */}
+            <Col md={7}>
+              {zoomPosition.isHovering && (
+                <div
+                  style={{
+                    position: "absolute",
+
+                    width: "70vw", // Full viewport width
+                    height: "70vh", // Full viewport height
+                    zIndex: 1000, // Ensure it's above everything else
+                    backgroundColor: "rgba(0, 0, 0, 0.7)", // Optional dimming background
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={
+                      product?.thumbnail || "https://via.placeholder.com/300"
+                    }
+                    alt={product?.title}
+                    style={{
+                      position: "absolute",
+                      width: "50%",
+                      left: "50%",
+                      height: "auto",
+                      transform: `translate(-${zoomPosition.x}%, -${zoomPosition.y}%)`,
+                      transition: "transform 0.1s ease",
+                    }}
+                  />
+                </div>
+              )}
+            </Col>
+
             <h2 className="text-primary">{product?.title}</h2>
             <p className="text-muted">{product?.description}</p>
             <h5 className="text-success">${product?.price?.toFixed(2)}</h5>
