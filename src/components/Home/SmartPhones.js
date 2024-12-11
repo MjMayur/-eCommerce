@@ -25,13 +25,11 @@ function SmartPhones() {
         <Col md="2" key={product.id}>
           <Card
             className="shadow-md hover:shadow-lg  h-90 p-3 mt-4  hover:text-[#0d6efd]"
-            onClick={() => {
-              navigate("/product/details", {
-                state: {
-                  productID: product.id,
-                },
-              });
-            }}
+            onClick={() =>
+              navigate("/products", {
+                state: { category: "smartphones" },
+              })
+            }
           >
             <CardImg
               top

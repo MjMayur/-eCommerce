@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 
 function Header() {
+  // localStorage.getItem();
   return (
     <div className="shadow-md px-4 justify-center flex">
       <Navbar light expand="md" className=" w-75">

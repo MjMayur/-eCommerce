@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Card,
   CardBody,
@@ -16,11 +16,17 @@ import {
 function Products() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const category = location.state.category;
   const [loading, setLoading] = useState(true);
   const [cartProducts, setCartProducts] = useState([]);
 
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
+    fetch(
+      category
+        ? `https://dummyjson.com/products/category/${category}`
+        : "https://dummyjson.com/products"
+    )
       .then((response) => response.json())
       .then((data) => {
         setProducts(data.products);
@@ -58,8 +64,8 @@ function Products() {
     <Row md={12} className="m-3">
       <p className="text-center text-3xl text-bold">Products</p>
       {products.map((product) => (
-        <Col md={2} className="mt-5">
-          <Card className=" hover:shadow-2xl transition-shadow h-100 cursor-pointer hover:text-[#0d6efd] text-center border-none">
+        <Col md={2} className="mt-5" key={product.id}>
+          <Card className="hover:shadow-2xl transition-shadow h-100 cursor-pointer hover:text-[#0d6efd] text-center border-none">
             <CardImg
               top
               src={product.images[0]}
@@ -75,7 +81,7 @@ function Products() {
                 });
               }}
             >
-              <CardTitle tag="h5" className="font-semibold ">
+              <CardTitle tag="h5" className="font-semibold">
                 {product.title?.length > 20
                   ? `${product.title.slice(0, 20)}...`
                   : product.title}
@@ -87,7 +93,7 @@ function Products() {
               </p>
               <div className="bg-success w-14 mt-1 text-[12px] text-white rounded p-1 flex items-center justify-center">
                 <i
-                  className="fa fa-star  text-[12px] mr-1"
+                  className="fa fa-star text-[12px] mr-1"
                   aria-hidden="true"
                 ></i>
                 {product.rating}
@@ -99,7 +105,10 @@ function Products() {
                 <Button
                   color="primary bottom-3 absolute right-3"
                   size="sm"
-                  onClick={() => addToCart(product)}
+                  onClick={(event) => {
+                    event.stopPropagation(); // Prevent bubbling
+                    addToCart(product);
+                  }}
                 >
                   Add to Cart
                 </Button>

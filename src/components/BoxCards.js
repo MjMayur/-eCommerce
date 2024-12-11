@@ -4,6 +4,7 @@ import { Button, Card, CardBody, CardImg, CardTitle, Col } from "reactstrap";
 
 function ProductCards(category) {
   const [sports, setSports] = useState([]);
+  const [cartProducts, setCartProducts] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     fetch(`https://dummyjson.com/products/category/${category.category}`)
@@ -18,6 +19,21 @@ function ProductCards(category) {
         // setLoading(false);
       });
   }, []);
+
+  const addToCart = (value) => {
+    const array = [...cartProducts];
+
+    // Check if the product is already in the cart
+    const isProductInCart = array.some((product) => product.id === value.id);
+
+    if (!isProductInCart) {
+      array.push(value);
+      setCartProducts(array);
+      localStorage.setItem("product", JSON.stringify(array));
+    } else {
+      console.log("Product is already in the cart");
+    }
+  };
 
   return (
     <div className="grid grid-cols-2 ">
@@ -60,6 +76,10 @@ function ProductCards(category) {
                   color="primary"
                   size="sm"
                   className="absolute bottom-3 right-3"
+                  onClick={(event) => {
+                    event.stopPropagation(); // Prevent bubbling
+                    addToCart(product);
+                  }}
                 >
                   Add to Cart
                 </Button>

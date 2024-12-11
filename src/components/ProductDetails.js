@@ -141,7 +141,7 @@ function ProductDetails() {
           {/* Product Info Section */}
           <Col md={7}>
             {/* Zoomed Image */}
-            <Col md={7}>
+            {/* <Col md={7}>
               {zoomPosition.isHovering && (
                 <div
                   style={{
@@ -171,7 +171,7 @@ function ProductDetails() {
                   />
                 </div>
               )}
-            </Col>
+            </Col> */}
 
             <h2 className="text-primary">{product?.title}</h2>
             <p className="text-muted">{product?.description}</p>

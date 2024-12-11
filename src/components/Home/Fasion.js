@@ -23,13 +23,11 @@ function Fashion() {
         <Col md="2" key={product.id}>
           <Card
             className="shadow-md hover:shadow-lg  h-70 p-3 mt-4 hover:text-[#0d6efd] cursor-pointer"
-            onClick={() => {
-              navigate("/product/details", {
-                state: {
-                  productID: product.id,
-                },
-              });
-            }}
+            onClick={() =>
+              navigate("/products", {
+                state: { category: "beauty" },
+              })
+            }
           >
             <CardImg
               top

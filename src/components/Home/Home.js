@@ -88,9 +88,13 @@ const Home = () => {
           <Card className="mt-3  w-75 cursor-pointer">
             <p
               className="bg-white text-2xl font-bold mb-3 pt-4 "
-              onClick={() => navigate("/products")}
+              onClick={() =>
+                navigate("/products", {
+                  state: { category: "smartphones" },
+                })
+              }
             >
-              Electronics
+              Smart Phones
             </p>
             <SmartPhones />
           </Card>{" "}
@@ -101,7 +105,14 @@ const Home = () => {
             className="h-100 w-25 mt-3"
           />
         </Row>
-        <Card className="p-3">
+        <Card
+          className="p-3"
+          onClick={() =>
+            navigate("/products", {
+              state: { category: "beauty" },
+            })
+          }
+        >
           <p className="bg-white text-2xl font-bold  pt">Beuty</p>
           <Fashion />
         </Card>
