@@ -1,48 +1,83 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardBody, CardImg, CardTitle, Col } from "reactstrap";
+import {
+  Toast,
+  ToastHeader,
+  ToastBody,
+  Button,
+  Card,
+  CardBody,
+  CardImg,
+  CardTitle,
+  Col,
+  Alert,
+} from "reactstrap";
 
 function ProductCards(category) {
   const [sports, setSports] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
+  const [toast, setToast] = useState({ visible: false, message: "" });
   const navigate = useNavigate();
+
   useEffect(() => {
     fetch(`https://dummyjson.com/products/category/${category.category}`)
       .then((response) => response.json())
       .then((data) => {
         setSports(data.products);
-
-        // setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching product data:", error);
-        // setLoading(false);
       });
   }, []);
 
   const addToCart = (value) => {
     const array = [...cartProducts];
-
-    // Check if the product is already in the cart
     const isProductInCart = array.some((product) => product.id === value.id);
 
     if (!isProductInCart) {
       array.push(value);
       setCartProducts(array);
       localStorage.setItem("product", JSON.stringify(array));
+      setToast({
+        code: 200,
+        visible: true,
+        message: `Added "${value.title}" to cart!`,
+      });
     } else {
-      console.log("Product is already in the cart");
+      setToast({
+        code: 400,
+        visible: true,
+        message: `"${value.title}" is already in the cart.`,
+      });
     }
+    setTimeout(() => {
+      setToast({
+        visible: false,
+        message: "",
+      });
+    }, 3000);
   };
 
   return (
     <div className="grid grid-cols-2 ">
-      {" "}
-      {/* Adjusted gap for reduced vertical space */}
+      {/* Toast Notification */}
+      {toast.visible && (
+        <div
+          className="position-fixed top-20 start-50 translate-middle p-3"
+          style={{ zIndex: 1050 }}
+        >
+          {toast.code === 200 ? (
+            <Alert color="primary">{toast.message}.</Alert>
+          ) : (
+            <Alert color="danger">{toast.message}.</Alert>
+          )}
+        </div>
+      )}
+
       {sports.slice(0, 4).map((product) => (
         <Col md="12" key={product.id} className="p-2">
           <Card
-            className=" hover:shadow-lg transition-shadow p-2 hover:text-[#0d6efd] cursor-pointer"
+            className="hover:shadow-lg transition-shadow p-2 hover:text-[#0d6efd] cursor-pointer"
             onClick={() => {
               navigate("/product/details", {
                 state: {
@@ -55,10 +90,10 @@ function ProductCards(category) {
               top
               src={product.thumbnail}
               alt={product.name}
-              className=" h-60"
+              className="h-60"
             />
             <CardBody className="">
-              <CardTitle tag="h5" className="font-semibold  text-center ">
+              <CardTitle tag="h5" className="font-semibold text-center">
                 {product.title.length > 10
                   ? `${product.title.slice(0, 20)}...`
                   : product.title}
@@ -77,7 +112,7 @@ function ProductCards(category) {
                   size="sm"
                   className="absolute bottom-3 right-3"
                   onClick={(event) => {
-                    event.stopPropagation(); // Prevent bubbling
+                    event.stopPropagation();
                     addToCart(product);
                   }}
                 >
