@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { Card, CardImg, CardTitle, Col, Row } from "reactstrap";
-
 function SmartPhones() {
   const navigate = useNavigate();
   const [electricProducts, setElectricProducts] = useState([]);

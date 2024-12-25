@@ -9,6 +9,7 @@ import {
   Input,
   Button,
   Alert,
+  Row,
 } from "reactstrap";
 
 function Login() {
@@ -37,15 +38,17 @@ function Login() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center top-5">
-      <Card style={{ width: "400px" }}>
+    <Row
+      md={4}
+      className="flex justify-center align-items-center"
+      style={{ marginTop: "5%" }}
+    >
+      <Card>
         <CardBody>
-          <CardTitle tag="h4" className="text-center mb-4">
+          <CardTitle tag="h4" className="text-center">
             Login
           </CardTitle>
-
           {error && <Alert color="danger">{error}</Alert>}
-
           <Form onSubmit={handleLogin}>
             <FormGroup>
               <Label for="email">Email</Label>
@@ -75,7 +78,7 @@ function Login() {
           </Form>
         </CardBody>
       </Card>
-    </div>
+    </Row>
   );
 }
 
