@@ -32,8 +32,6 @@ function Login() {
     }
 
     setError("");
-
-    // Perform login logic here (e.g., API call)
     console.log("Login successful with:", { email, password });
   };
 
@@ -76,6 +74,20 @@ function Login() {
               Login
             </Button>
           </Form>
+
+          {/* Links for Forgot Password and Sign Up */}
+          <div className="text-center mt-3">
+            <a href="/forgot-password" className="text-primary">
+              Forgot Password?
+            </a>
+            <br />
+            <span>
+              Don't have an account?{" "}
+              <a href="/signup" className="text-primary">
+                Sign Up
+              </a>
+            </span>
+          </div>
         </CardBody>
       </Card>
     </Row>
