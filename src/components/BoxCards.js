@@ -105,7 +105,7 @@ function ProductCards(category) {
               </p>
               <div className="flex justify-between items-center pt-8">
                 <span className="font-bold text-primary absolute bottom-3 left-3">
-                  {product.price ? `$${product.price}` : "N/A"}
+                  {product.price ? `₹${product.price}` : "N/A"}
                 </span>
                 <Button
                   color="primary"

@@ -100,7 +100,7 @@ function Products() {
               </div>
               <div className="flex justify-between items-center mt-3 p-3">
                 <span className="font-bold text-primary absolute bottom-3 left-3 text-2xl">
-                  ${product.price}
+                  ₹{product.price}
                 </span>
                 <Button
                   color="primary bottom-3 absolute right-3"

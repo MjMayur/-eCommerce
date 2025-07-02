@@ -175,7 +175,7 @@ function ProductDetails() {
 
             <h2 className="text-primary">{product?.title}</h2>
             <p className="text-muted">{product?.description}</p>
-            <h5 className="text-success">${product?.price?.toFixed(2)}</h5>
+            <h5 className="text-success">₹{product?.price?.toFixed(2)}</h5>
             <p className="text-danger">
               Discount: {product?.discountPercentage}%
             </p>
