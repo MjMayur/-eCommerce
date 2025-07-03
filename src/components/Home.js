@@ -80,7 +80,7 @@ const Home = () => {
       {/* Hero Section */}
 
       <div className="relative w-full h-screen  absolute top-0">
-        <Swiper
+        {/* <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           navigation
           pagination={{ clickable: true }}
@@ -109,7 +109,7 @@ const Home = () => {
               className="w-full h-full object-cover"
             />
           </SwiperSlide>
-        </Swiper>
+        </Swiper> */}
 
         {/* Featured Products */}
         <Row>
@@ -139,12 +139,12 @@ const Home = () => {
               ))}
             </Row>
           </Card>{" "}
-          <CardImg
+          {/* <CardImg
             top
             src="https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg"
             alt="shoes"
             className="h-100 w-25 mt-3"
-          />
+          /> */}
         </Row>
         <Card className="mt-3 p-3">
           <p className="bg-white text-2xl font-bold mb-2 ">Fasion</p>

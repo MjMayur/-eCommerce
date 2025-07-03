@@ -1,67 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Card, Col, Row, Button, Badge, CardHeader } from "reactstrap";
+import {
+  Card,
+  Col,
+  Row,
+  Button,
+  Badge,
+  CardHeader,
+  Container,
+} from "reactstrap";
 
 function ProductDetails() {
   const location = useLocation();
-  const productID = location.state.productID;
+  const productID = location.state?.productID || 1;
 
-  const [product, setProduct] = useState({
-    id: 1,
-    title: "Essence Mascara Lash Princess",
-    description:
-      "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-    category: "beauty",
-    price: 9.99,
-    discountPercentage: 7.17,
-    rating: 4.94,
-    stock: 5,
-    tags: ["beauty", "mascara"],
-    brand: "Essence",
-    sku: "RCH45Q1A",
-    weight: 2,
-    dimensions: {
-      width: 23.17,
-      height: 14.43,
-      depth: 28.01,
-    },
-    warrantyInformation: "1 month warranty",
-    shippingInformation: "Ships in 1 month",
-    availabilityStatus: "Low Stock",
-    reviews: [
-      {
-        rating: 2,
-        comment: "Very unhappy with my purchase!",
-        date: "2024-05-23T08:56:21.618Z",
-        reviewerName: "John Doe",
-        reviewerEmail: "john.doe@x.dummyjson.com",
-      },
-      {
-        rating: 2,
-        comment: "Not as described!",
-        date: "2024-05-23T08:56:21.618Z",
-        reviewerName: "Nolan Gonzalez",
-        reviewerEmail: "nolan.gonzalez@x.dummyjson.com",
-      },
-      {
-        rating: 5,
-        comment: "Very satisfied!",
-        date: "2024-05-23T08:56:21.618Z",
-        reviewerName: "Scarlett Wright",
-        reviewerEmail: "scarlett.wright@x.dummyjson.com",
-      },
-    ],
-    returnPolicy: "30 days return policy",
-    minimumOrderQuantity: 24,
-    meta: {
-      createdAt: "2024-05-23T08:56:21.618Z",
-      updatedAt: "2024-05-23T08:56:21.618Z",
-      barcode: "9164035109868",
-      qrCode: "...",
-    },
-    thumbnail: "...",
-    images: ["...", "...", "..."],
-  });
+  const [product, setProduct] = useState(null);
   const [zoomPosition, setZoomPosition] = useState({
     x: 0,
     y: 0,
@@ -71,174 +24,124 @@ function ProductDetails() {
   const handleMouseMove = (e) => {
     const { left, top, width, height } =
       e.currentTarget.getBoundingClientRect();
-    const x = ((e.pageX - left) / width) * 100; // Calculate percentage position
+    const x = ((e.pageX - left) / width) * 100;
     const y = ((e.pageY - top) / height) * 100;
-
     setZoomPosition({ x, y, isHovering: true });
   };
 
   const handleMouseLeave = () => {
-    setZoomPosition({ ...zoomPosition, isHovering: false });
+    setZoomPosition((prev) => ({ ...prev, isHovering: false }));
   };
+
   useEffect(() => {
     fetch(`https://dummyjson.com/products/${productID}`)
       .then((response) => response.json())
-      .then((data) => {
-        setProduct(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching product data:", error);
-        // setLoading(false);
-      });
-  }, []);
+      .then((data) => setProduct(data))
+      .catch((error) => console.error("Error fetching product:", error));
+  }, [productID]);
+
+  if (!product) return <div className="text-center mt-5">Loading...</div>;
+
   return (
-    <div className="d-flex justify-content-center my-5">
-      {/* <div>
-        <p className="text-center text-3xl text-bold">Product Details</p>
-      </div> */}
-      <Card className="p-4 shadow-lg w-75">
+    <Container className="my-5">
+      <Card className="p-4 shadow-lg">
         <Row>
-          {/* Product Image Section */}
+          {/* Image Column */}
           <Col
-            md={5}
-            style={{
-              position: "relative",
-              overflow: "hidden",
-            }}
+            xs="12"
+            md="5"
+            className="mb-4 mb-md-0 d-flex justify-content-center"
           >
             <div
+              className="border rounded overflow-hidden"
               style={{
+                width: "100%",
+                maxWidth: "400px",
+                height: "400px",
                 position: "relative",
-                display: "flex",
-                gap: "20px",
               }}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
             >
-              {/* Main Image */}
-              <div
-                style={{
-                  position: "relative",
-                  overflow: "hidden",
-                  width: "500px",
-                  height: "500px",
-                  border: "1px solid #ccc",
-                }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-              >
-                <img
-                  src={product?.thumbnail || "https://via.placeholder.com/300"}
-                  alt={product?.title}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
+              <img
+                src={product.thumbnail || "https://via.placeholder.com/300"}
+                alt={product.title}
+                className="img-fluid h-100 w-100 object-fit-cover"
+                style={{ objectFit: "cover" }}
+              />
             </div>
           </Col>
 
-          {/* Product Info Section */}
-          <Col md={7}>
-            {/* Zoomed Image */}
-            {/* <Col md={7}>
-              {zoomPosition.isHovering && (
-                <div
-                  style={{
-                    position: "absolute",
-                    width: "70vw", // Full viewport width
-                    height: "70vh", // Full viewport height
-                    zIndex: 1000, // Ensure it's above everything else
-                    backgroundColor: "rgba(0, 0, 0, 0.7)", // Optional dimming background
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img
-                    src={
-                      product?.thumbnail || "https://via.placeholder.com/300"
-                    }
-                    alt={product?.title}
-                    style={{
-                      position: "absolute",
-                      width: "50%",
-                      left: "50%",
-                      height: "auto",
-                      transform: `translate(-${zoomPosition.x}%, -${zoomPosition.y}%)`,
-                      transition: "transform 0.1s ease",
-                    }}
-                  />
-                </div>
-              )}
-            </Col> */}
+          {/* Details Column */}
+          <Col xs="12" md="7">
+            <h2 className="text-primary">{product.title}</h2>
+            <p className="text-muted">{product.description}</p>
 
-            <h2 className="text-primary">{product?.title}</h2>
-            <p className="text-muted">{product?.description}</p>
-            <h5 className="text-success">₹{product?.price?.toFixed(2)}</h5>
-            <p className="text-danger">
-              Discount: {product?.discountPercentage}%
+            <h4 className="text-success mb-1">₹{product.price?.toFixed(2)}</h4>
+            <p className="text-danger mb-2">
+              Discount: {product.discountPercentage}%
             </p>
 
-            {/* Stock and Rating */}
-            <div className="d-flex align-items-center gap-3 mb-3">
-              <Badge color={product?.stock > 0 ? "success" : "danger"}>
-                {product?.availabilityStatus}
+            <div className="d-flex align-items-center gap-3 flex-wrap mb-3">
+              <Badge color={product.stock > 0 ? "success" : "danger"}>
+                {product.availabilityStatus ||
+                  (product.stock > 0 ? "In Stock" : "Out of Stock")}
               </Badge>
               <span className="text-warning">
-                Rating: {product?.rating}{" "}
-                <i className="fa fa-star" aria-hidden="true"></i>
+                Rating: {product.rating} <i className="fa fa-star" />
               </span>
             </div>
 
-            {/* Tags */}
-            <div className="mb-3">
+            <div className="mb-2">
               <strong>Tags:</strong>{" "}
-              {product?.tags?.map((tag, index) => (
-                <Badge color="info" className="me-1" key={index}>
+              {product.tags?.map((tag, i) => (
+                <Badge key={i} color="info" className="me-1">
                   {tag}
                 </Badge>
               ))}
             </div>
 
-            {/* Additional Info */}
-            <div className="mb-3">
-              <strong>Brand:</strong> {product?.brand}
+            <div className="mb-2">
+              <strong>Brand:</strong> {product.brand} <br />
+              <strong>SKU:</strong> {product.sku} <br />
+              <strong>Warranty:</strong> {product.warrantyInformation || "N/A"}{" "}
               <br />
-              <strong>SKU:</strong> {product?.sku}
-              <br />
-              <strong>Warranty:</strong> {product?.warrantyInformation}
-              <br />
-              <strong>Shipping:</strong> {product?.shippingInformation}
+              <strong>Shipping:</strong>{" "}
+              {product.shippingInformation || "Standard"} <br />
+              <strong>Return Policy:</strong>{" "}
+              {product.returnPolicy || "No return"}
             </div>
 
-            <Button color="primary" className="mt-3">
+            <Button color="primary" className="mt-3 w-100 w-md-auto">
               Add to Cart
             </Button>
           </Col>
         </Row>
 
-        {/* Reviews Section */}
+        {/* Reviews */}
         <Row className="mt-5">
-          <h3>Customer Reviews</h3>
-          {product?.reviews?.length ? (
-            product?.reviews?.map((review, index) => (
-              <Card key={index} className="my-2 p-3 shadow-sm">
-                <strong>{review.reviewerName}</strong> (
-                {new Date(review?.date).toLocaleDateString()})
-                <p className="text-muted">{review?.comment}</p>
-                <span className="text-warning">
-                  Rating: {review?.rating}{" "}
-                  <i className="fa fa-star" aria-hidden="true"></i>
-                </span>
-              </Card>
-            ))
-          ) : (
-            <p>No reviews yet.</p>
-          )}
+          <Col>
+            <h4>Customer Reviews</h4>
+            {product.reviews?.length > 0 ? (
+              product.reviews.map((review, i) => (
+                <Card key={i} className="p-3 my-2 shadow-sm">
+                  <strong>{review.reviewerName}</strong>{" "}
+                  <span className="text-muted">
+                    ({new Date(review.date).toLocaleDateString()})
+                  </span>
+                  <p>{review.comment}</p>
+                  <span className="text-warning">
+                    Rating: {review.rating} <i className="fa fa-star" />
+                  </span>
+                </Card>
+              ))
+            ) : (
+              <p>No reviews available.</p>
+            )}
+          </Col>
         </Row>
       </Card>
-    </div>
+    </Container>
   );
 }
 
